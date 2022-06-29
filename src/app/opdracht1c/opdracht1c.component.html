@@ -1,0 +1,80 @@
+<h1>My To Do List</h1>
+
+<hr>
+<h3 *ngIf="filterItemsDone(false).length >= 2">There are still {{ filterItemsDone(false).length }} items to do!</h3>
+<h3 *ngIf="filterItemsDone(false).length == 1">There is still 1 item to do!</h3>
+<h3 *ngIf="filterItemsDone(false).length == 0 && filterItemsDone(true).length > 0">You are all done, good job!</h3>
+<h3 *ngIf="filterItemsDone(false).length == 0 && filterItemsDone(true).length == 0">Your todo list is empty!</h3>
+<hr>
+
+<div class="row">
+    <div class="column">
+        <h4>Items to do:</h4>
+        <table>
+            <tr *ngFor="let item of filterItemsDone(false)">
+                <td>
+                    {{ item.id }}
+                </td>
+                <td> 
+                    {{ item.name }}
+                </td>
+                <td>
+                    <button (click)="changeStatus(item)">
+                        <span class="material-symbols-outlined">done_outline</span>
+                    </button>
+                </td>
+                <td>
+                    <button (click)="removeItem(item)">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr [hidden]="buttonStatus()">
+                <td>TESTTEST</td>
+            </tr>
+        </table>
+        <br>
+        <button [disabled]="buttonStatus()" (click)="markAllItemsDone()">
+            Mark all items as done
+        </button>
+    </div>
+
+    <div class="column">
+        <h4>Items done:</h4>
+        <table>
+            <tr *ngFor="let item of filterItemsDone(true)">
+                <td>
+                    {{ item.id }}
+                </td>
+                <td> 
+                    {{ item.name }}
+                </td>
+                <td>
+                    <button (click)="changeStatus(item)">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </td>
+                <td>
+                    <button (click)="removeItem(item)">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr>
+
+<h4>Add a new item</h4>
+<input type="text" #newtodo>
+<button (click)="addNewItem(newtodo)">
+    <span class="material-symbols-outlined">add</span>
+</button>
+
+<br><br><br>
+<button (click)="removeAllItems()">
+    Remove all items
+</button>
+<br>
+
